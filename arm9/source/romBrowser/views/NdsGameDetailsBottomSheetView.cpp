@@ -16,10 +16,10 @@ NdsGameDetailsBottomSheetView::NdsGameDetailsBottomSheetView(
     , _cheatsChip(md::sys::color::surfaceContainerLow, materialColorScheme, fontRepository)
     , _favoriteChip(md::sys::color::surfaceContainerLow, materialColorScheme, fontRepository)
 {
-    _cheatsChip.SetText(u"Cheats");
+    _cheatsChip.SetText(u"金手指");
     _cheatsChip.SetSelected(false);
     AddChildTail(&_cheatsChip);
-    _favoriteChip.SetText(u"Favorite");
+    _favoriteChip.SetText(u"收藏");
     _favoriteChip.SetSelected(true);
     AddChildTail(&_favoriteChip);
 }
