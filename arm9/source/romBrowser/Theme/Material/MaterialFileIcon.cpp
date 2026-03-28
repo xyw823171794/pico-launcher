@@ -9,16 +9,77 @@
 #include "themes/IFontRepository.h"
 #include "MaterialFileIcon.h"
 
+namespace
+{
+    static const char* DecodeUtf8Character(const char* src, char16_t& dst)
+    {
+        u8 c0 = (u8)*src++;
+        if (c0 == 0)
+        {
+            dst = 0;
+            return src - 1;
+        }
+
+        if ((c0 & 0x80) == 0)
+        {
+            dst = c0;
+            return src;
+        }
+
+        if ((c0 & 0xE0) == 0xC0)
+        {
+            u8 c1 = (u8)*src++;
+            if ((c1 & 0xC0) != 0x80)
+            {
+                dst = '?';
+                return src - 1;
+            }
+
+            dst = ((c0 & 0x1F) << 6) | (c1 & 0x3F);
+            return src;
+        }
+
+        if ((c0 & 0xF0) == 0xE0)
+        {
+            u8 c1 = (u8)*src++;
+            u8 c2 = (u8)*src++;
+            if ((c1 & 0xC0) != 0x80 || (c2 & 0xC0) != 0x80)
+            {
+                dst = '?';
+                return src - 1;
+            }
+
+            dst = ((c0 & 0x0F) << 12) | ((c1 & 0x3F) << 6) | (c2 & 0x3F);
+            return src;
+        }
+
+        // 4-byte UTF-8 sequences are outside BMP and unsupported in this renderer.
+        if ((c0 & 0xF8) == 0xF0)
+        {
+            for (int i = 0; i < 3 && ((*src & 0xC0) == 0x80); i++)
+            {
+                src++;
+            }
+        }
+
+        dst = '?';
+        return src;
+    }
+}
+
 MaterialFileIcon::MaterialFileIcon(const TCHAR* name, const MaterialColorScheme* materialColorScheme,
     const IFontRepository* fontRepository)
     : _materialColorScheme(materialColorScheme), _fontRepository(fontRepository)
 {
     int i;
+    const char* p = name;
     for (i = 0; i < 3; i++)
     {
-        TCHAR c = name[i];
+        char16_t c;
+        p = DecodeUtf8Character(p, c);
         if (c == 0)
             break;
+
         _displayName[i] = c;
     }
     _displayName[i] = 0;
