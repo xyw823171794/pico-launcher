@@ -8,12 +8,14 @@
 class IRomBrowserController;
 class MaterialColorScheme;
 class IFontRepository;
+class LocalizationProvider;
 
 class DisplaySettingsBottomSheetView : public BottomSheetView
 {
 public:
     DisplaySettingsBottomSheetView(DisplaySettingsViewModel* viewModel,
-        const MaterialColorScheme* materialColorScheme, const IFontRepository* fontRepository);
+        const MaterialColorScheme* materialColorScheme, const IFontRepository* fontRepository,
+        const LocalizationProvider* localizationProvider);
 
     void InitVram(const VramContext& vramContext) override;
     void Update() override;

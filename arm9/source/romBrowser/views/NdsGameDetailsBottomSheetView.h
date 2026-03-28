@@ -5,6 +5,7 @@
 
 class IRomBrowserController;
 class IFontRepository;
+class LocalizationProvider;
 
 class NdsGameDetailsBottomSheetView : public BottomSheetView
 {
@@ -12,7 +13,8 @@ public:
     NdsGameDetailsBottomSheetView(
         IRomBrowserController* romBrowserController,
         const MaterialColorScheme* materialColorScheme,
-        const IFontRepository* fontRepository);
+        const IFontRepository* fontRepository,
+        const LocalizationProvider* localizationProvider);
 
     void SetGraphics(const ChipView::VramToken& chipVramToken)
     {

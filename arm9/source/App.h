@@ -30,6 +30,7 @@
 #include "themes/ITheme.h"
 #include "core/SharedPtr.h"
 #include "animation/Animator.h"
+#include "localization/LocalizationProvider.h"
 
 class alignas(32) App : public IProcess
 {
@@ -94,6 +95,7 @@ private:
     RomBrowserBottomScreenViewModel _romBrowserBottomScreenViewModel;
 
     DialogPresenter _dialogPresenter;
+    LocalizationProvider _localizationProvider;
 
     VramState _vramStateBeforeMakeBottomScreenView;
     VramState _vramStateAfterMakeBottomScreenView;

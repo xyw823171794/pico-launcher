@@ -10,6 +10,7 @@
 class MaterialColorScheme;
 class IFontRepository;
 class IVramManager;
+class LocalizationProvider;
 
 /// @brief Bottom sheet for browsing and enabling/disabling cheats.
 class CheatsBottomSheetView : public BottomSheetView
@@ -17,7 +18,7 @@ class CheatsBottomSheetView : public BottomSheetView
 public:
     CheatsBottomSheetView(std::unique_ptr<CheatsViewModel> viewModel,
         const MaterialColorScheme* materialColorScheme, const IFontRepository* fontRepository,
-        FocusManager* focusManager);
+        FocusManager* focusManager, const LocalizationProvider* localizationProvider);
 
     ~CheatsBottomSheetView() override
     {

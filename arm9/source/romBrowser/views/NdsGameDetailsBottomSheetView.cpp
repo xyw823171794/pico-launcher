@@ -8,18 +8,19 @@
 #include "smallHeartIconFilled.h"
 #include "../IRomBrowserController.h"
 #include "NdsGameDetailsBottomSheetView.h"
+#include "localization/LocalizationProvider.h"
 
 NdsGameDetailsBottomSheetView::NdsGameDetailsBottomSheetView(
     IRomBrowserController* romBrowserController, const MaterialColorScheme* materialColorScheme,
-    const IFontRepository* fontRepository)
+    const IFontRepository* fontRepository, const LocalizationProvider* localizationProvider)
     : _romBrowserController(romBrowserController)
     , _cheatsChip(md::sys::color::surfaceContainerLow, materialColorScheme, fontRepository)
     , _favoriteChip(md::sys::color::surfaceContainerLow, materialColorScheme, fontRepository)
 {
-    _cheatsChip.SetText(u"Cheats");
+    _cheatsChip.SetText(localizationProvider->Get("ui.game_details.cheats"));
     _cheatsChip.SetSelected(false);
     AddChildTail(&_cheatsChip);
-    _favoriteChip.SetText(u"Favorite");
+    _favoriteChip.SetText(localizationProvider->Get("ui.game_details.favorite"));
     _favoriteChip.SetSelected(true);
     AddChildTail(&_favoriteChip);
 }

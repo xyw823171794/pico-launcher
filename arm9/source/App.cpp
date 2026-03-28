@@ -50,7 +50,8 @@ App::App(IAppSettingsService& appSettingsService, IBgmService& bgmService)
     , _romBrowserController(&appSettingsService, &_ioTaskQueue, &_bgTaskQueue)
     , _displaySettingsBottomSheetViewModel(&_romBrowserController)
     , _romBrowserBottomScreenViewModel(&_romBrowserController)
-    , _dialogPresenter(&_focusManager, &_mainObjDialogVram) { }
+    , _dialogPresenter(&_focusManager, &_mainObjDialogVram)
+    , _localizationProvider(_appSettingsService.GetAppSettings().language.GetString()) { }
 
 void App::InitVramMapping() const
 {
@@ -297,13 +298,15 @@ void App::HandleTrigger(RomBrowserStateTrigger trigger, RomBrowserState newState
 void App::HandleShowGameInfoTrigger()
 {
     // auto gameInfoDialog = std::make_unique<NdsGameDetailsBottomSheetView>(
-    //     &_romBrowserController, &_theme->GetMaterialColorScheme(), _theme->GetFontRepository());
+    //     &_romBrowserController, &_theme->GetMaterialColorScheme(), _theme->GetFontRepository(),
+    //     &_localizationProvider);
     // gameInfoDialog->SetGraphics(_chipViewVram);
     // _dialogPresenter.ShowDialog(std::move(gameInfoDialog));
 
     auto cheatsViewModel = std::make_unique<CheatsViewModel>(_romBrowserController.GetTriggerFileInfo(), &_romBrowserController);
     auto cheatsDialog = std::make_unique<CheatsBottomSheetView>(
-        std::move(cheatsViewModel), &_theme->GetMaterialColorScheme(), _theme->GetFontRepository(), &_focusManager);
+        std::move(cheatsViewModel), &_theme->GetMaterialColorScheme(), _theme->GetFontRepository(),
+        &_focusManager, &_localizationProvider);
     _dialogPresenter.ShowDialog(std::move(cheatsDialog));
 }
 
@@ -317,7 +320,8 @@ void App::HandleHideGameInfoTrigger()
 void App::HandleShowDisplaySettingsTrigger()
 {
     auto displaySettingsDialog = std::make_unique<DisplaySettingsBottomSheetView>(
-        &_displaySettingsBottomSheetViewModel, &_theme->GetMaterialColorScheme(), _theme->GetFontRepository());
+        &_displaySettingsBottomSheetViewModel, &_theme->GetMaterialColorScheme(), _theme->GetFontRepository(),
+        &_localizationProvider);
     displaySettingsDialog->SetGraphics(_iconButtonViewVram);
     _dialogPresenter.ShowDialog(std::move(displaySettingsDialog));
 }

@@ -12,6 +12,7 @@
 #include "cheatSelector.h"
 #include "gui/DescendingStackVramManager.h"
 #include "CheatsBottomSheetView.h"
+#include "localization/LocalizationProvider.h"
 
 #define TITLE_LABEL_X               20
 #define TITLE_LABEL_Y               16
@@ -32,10 +33,10 @@
 
 CheatsBottomSheetView::CheatsBottomSheetView(std::unique_ptr<CheatsViewModel> viewModel,
     const MaterialColorScheme* materialColorScheme, const IFontRepository* fontRepository,
-    FocusManager* focusManager)
+    FocusManager* focusManager, const LocalizationProvider* localizationProvider)
     : _viewModel(std::move(viewModel))
-    , _titleLabel(64, 16, 25, fontRepository->GetFont(FontType::Medium11))
-    , _secondaryLabel(177, 16, 64, fontRepository->GetFont(FontType::Regular10))
+    , _titleLabel(64, 16, 32, fontRepository->GetFont(FontType::Medium11))
+    , _secondaryLabel(177, 16, 128, fontRepository->GetFont(FontType::Regular10))
     , _descriptionLabel(224, 16, 256, fontRepository->GetFont(FontType::Medium7_5))
     , _cheatListRecycler(std::make_unique<RecyclerView>(
         LIST_X, LIST_Y, LIST_WIDTH, LIST_HEIGHT, RecyclerView::Mode::VerticalList))
@@ -43,8 +44,8 @@ CheatsBottomSheetView::CheatsBottomSheetView(std::unique_ptr<CheatsViewModel> vi
     , _fontRepository(fontRepository)
     , _focusManager(focusManager)
 {
-    _titleLabel.SetText(u"Cheats");
-    _secondaryLabel.SetText(u"No cheats found.");
+    _titleLabel.SetText(localizationProvider->Get("ui.cheats.title"));
+    _secondaryLabel.SetText(localizationProvider->Get("ui.cheats.empty"));
     _secondaryLabel.SetEllipsisStyle(LabelView::EllipsisStyle::Ellipsis);
     _descriptionLabel.SetEllipsisStyle(LabelView::EllipsisStyle::Marquee);
     _descriptionLabel.SetText("");
