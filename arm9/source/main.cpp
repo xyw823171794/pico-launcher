@@ -22,11 +22,7 @@
 #include "rng/RandomGenerator.h"
 #include "rng/LinearCongruentialGenerator.h"
 #include "rng/ThreadSafeRandomGenerator.h"
-#include "NotoSansJP-Regular-10_nft2.h"
-#include "NotoSansJP-Medium-7_5_nft2.h"
-#include "NotoSansJP-Medium-10_nft2.h"
-#include "NotoSansJP-Medium-11_nft2.h"
-#include "gui/font/nitroFont2.h"
+#include "themes/RuntimeFonts.h"
 #include "picoLoaderBootstrap.h"
 #include "rtcIpc.h"
 
@@ -214,10 +210,7 @@ int main(int argc, char* argv[])
     // todo: make sure _pico folder exists
     // maybe warn if important files are missing as well?
 
-    nft2_unpack((nft2_header_t*)NotoSansJP_Regular_10_nft2);
-    nft2_unpack((nft2_header_t*)NotoSansJP_Medium_10_nft2);
-    nft2_unpack((nft2_header_t*)NotoSansJP_Medium_11_nft2);
-    nft2_unpack((nft2_header_t*)NotoSansJP_Medium_7_5_nft2);
+    RuntimeFonts::Init();
 
     gProcessManager.Goto<App>();
     gProcessManager.MainLoop();
