@@ -42,9 +42,21 @@ Currently, the only settings available are the display mode, and the sorting mod
 
 ## Settings
 Settings are stored on your SD card in `/_pico/settings.json`. They can be edited with any text editor. The following settings are available:
-- `language` - Display language for Pico Launcher. Currently, only `english` is supported. Other languages may be supported later.
+- `language` - Display language for Pico Launcher. Supported values: `english`, `chinese`.
 - `romBrowserLayout` - Specified how folder contents are displayed. This setting can be changed in Pico Launcher directly.
 - `romBrowserSortMode` - Specified if folder contents should be sorted from A to Z (`NameAscending`), or from Z to A (`NameDescending`). This setting can be changed from within Pico Launcher.
 - `theme`: Specifies the folder name of the theme to use. If the theme cannot be found, a default fallback theme will be used.
 - `lastUsedFilePath` - Specifies the path of the most recently launched homebrew or game, such that it can be selected the next time Pico Launcher is started. It is automatically updated by Pico Launcher.
 - `fileAssociations` - See [FileAssociations.md](/docs/FileAssociations.md) for information about how to use this setting.
+
+## Optional Chinese font pack
+
+The built-in fonts are Japanese-focused and don't include enough Simplified Chinese glyphs for full Chinese file-name rendering.
+You can install an external `.nft2` font pack by placing these files on your SD card:
+
+- `/_pico/fonts/NotoSansSC-Regular-10.nft2`
+- `/_pico/fonts/NotoSansSC-Medium-7_5.nft2`
+- `/_pico/fonts/NotoSansSC-Medium-10.nft2`
+- `/_pico/fonts/NotoSansSC-Medium-11.nft2`
+
+If a file is present and valid, Pico Launcher will load it automatically on startup and use it instead of the built-in font for that size.

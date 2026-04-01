@@ -9,14 +9,42 @@
 #include "themes/IFontRepository.h"
 #include "MaterialFileIcon.h"
 
+static char16_t DecodeUtf8Char(const char*& text)
+{
+    u8 c0 = *text++;
+    if (c0 == 0)
+        return 0;
+    if ((c0 & 0x80) == 0)
+        return c0;
+
+    u8 c1 = *text++;
+    if ((c1 & 0xC0) != 0x80)
+        return '?';
+
+    if ((c0 & 0xE0) == 0xC0)
+        return ((c0 & 0x1F) << 6) | (c1 & 0x3F);
+
+    u8 c2 = *text++;
+    if ((c2 & 0xC0) != 0x80)
+        return '?';
+
+    if ((c0 & 0xF0) == 0xE0)
+        return ((c0 & 0x0F) << 12) | ((c1 & 0x3F) << 6) | (c2 & 0x3F);
+
+    // 4-byte UTF-8 codepoints are outside BMP and unsupported by our char16 renderer.
+    text++;
+    return '?';
+}
+
 MaterialFileIcon::MaterialFileIcon(const TCHAR* name, const MaterialColorScheme* materialColorScheme,
     const IFontRepository* fontRepository)
     : _materialColorScheme(materialColorScheme), _fontRepository(fontRepository)
 {
+    const char* utf8Name = name;
     int i;
     for (i = 0; i < 3; i++)
     {
-        TCHAR c = name[i];
+        char16_t c = DecodeUtf8Char(utf8Name);
         if (c == 0)
             break;
         _displayName[i] = c;

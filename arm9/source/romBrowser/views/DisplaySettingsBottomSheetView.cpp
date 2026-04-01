@@ -58,11 +58,11 @@ DisplaySettingsBottomSheetView::DisplaySettingsBottomSheetView(
     , _materialColorScheme(materialColorScheme)
     // , _filtersLabel(64, 16, 25, fontRepository->GetFont(FontType::Regular10))
 {
-    _titleLabel.SetText(u"Display Settings");
+    _titleLabel.SetText(u"显示设置");
     AddChildTail(&_titleLabel);
-    _layoutLabel.SetText(u"Layout");
+    _layoutLabel.SetText(u"布局");
     AddChildTail(&_layoutLabel);
-    _sortingLabel.SetText(u"Sorting");
+    _sortingLabel.SetText(u"排序");
     AddChildTail(&_sortingLabel);
     // _filtersLabel.SetText(u"Filters");
     // AddChildTail(&_filtersLabel);
